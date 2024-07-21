@@ -117,6 +117,39 @@ import { z } from "zod";
  *                       - data
  *                       - token
  *                     message: Required
+ *       400:
+ *         description: Bad Request
+ *         headers:
+ *           Connection:
+ *             schema:
+ *               type: string
+ *               example: keep-alive
+ *           Content-Type:
+ *             schema:
+ *               type: string
+ *               example: application/json
+ *           Date:
+ *             schema:
+ *               type: string
+ *               example: Mon, 15 Jul 2024 06:39:30 GMT
+ *           Keep-Alive:
+ *             schema:
+ *               type: string
+ *               example: timeout=5
+ *           Transfer-Encoding:
+ *             schema:
+ *               type: string
+ *               example: chunked
+ *           Vary:
+ *             schema:
+ *               type: string
+ *               example: RSC, Next-Router-State-Tree, Next-Router-Prefetch
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               example:
+ *                 message: Subscription list is empty.
  */
 export async function POST(request: NextRequest) {
   const parsedRequest = z
@@ -151,6 +184,14 @@ export async function POST(request: NextRequest) {
   const subscriptions = await model.subscription.findMany({
     orderBy: { created_at: "asc" },
   });
+
+  if (subscriptions.length < 1) {
+    return NextResponse.json(
+      { message: "Subscription list is empty." },
+      { status: 400 },
+    );
+  }
+
   const batchResponses = await admin.messaging().sendEach(
     subscriptions.map((subscription) => ({
       token: subscription.token,
