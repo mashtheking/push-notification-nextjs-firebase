@@ -1,7 +1,7 @@
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import type { Metadata } from "next";
-import theme from "../theme";
+import roboto from "../theme/mui-roboto";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,7 +18,7 @@ export default function Layout({
     <html lang="en">
       <body>
         <AppRouterCacheProvider>
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          <ThemeProvider theme={roboto}>{children}</ThemeProvider>
         </AppRouterCacheProvider>
       </body>
     </html>

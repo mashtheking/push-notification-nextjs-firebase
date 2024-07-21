@@ -9,10 +9,8 @@ const roboto = Roboto({
   display: "swap",
 });
 
-const theme = createTheme({
+export default createTheme({
   typography: {
     fontFamily: roboto.style.fontFamily,
   },
 });
-
-export default theme;
