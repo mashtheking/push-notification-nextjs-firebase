@@ -13,24 +13,68 @@
   "scripts": {
     "dev": "next dev",
     "dev:secure": "next dev --experimental-https",
+    "migrate:dev": "npx dotenv -e .env.local -- prisma migrate dev",
+    "db:push": "npx dotenv -e .env.local -- prisma db push",
+    "migrate:reset": "npx dotenv -e .env.local -- prisma migrate reset",
+    "db:seed": "npx dotenv -e .env.local -- prisma db seed",
+    "prisma:generate": "npx dotenv -e .env.local -- prisma generate",
+    "prisma:studio": "npx dotenv -e .env.local -- prisma studio",
+    "production:build": "npx prisma generate && npx prisma migrate deploy && next build",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Artopologi/backend.git"
+  },
+  "keywords": [
+    "Backend",
+    "Artopologi",
+    "Marketplace",
+    "Express.js"
+  ],
+  "author": {
+    "name": "Septianata Rizky Pratama",
+    "email": "ngodingbang@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ngodingbang/push-notification-nextjs-firebase/issues"
+  },
+  "homepage": "https://github.com/ngodingbang/push-notification-nextjs-firebase#readme",
   "dependencies": {
+    "@emotion/cache": "^11.11.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.16.0",
+    "@mui/lab": "^5.0.0-alpha.172",
+    "@mui/material-nextjs": "^5.15.11",
+    "@prisma/client": "^5.16.2",
+    "@scalar/nextjs-api-reference": "^0.4.43",
+    "chalk": "^5.3.0",
     "firebase": "^10.12.3",
+    "firebase-admin": "^12.2.0",
     "next": "^14.2.5",
+    "next-swagger-doc": "^0.4.0",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "dotenv-cli": "^7.4.2",
     "eslint": "^8",
     "eslint-config-next": "14.2.4",
+    "eslint-plugin-jsdoc": "^48.7.0",
     "postcss": "^8",
-    "tailwindcss": "^3.4.1",
+    "prisma": "^5.16.2",
     "typescript": "^5"
+  },
+  "prisma": {
+    "schema": "src/database/schema.prisma",
+    "seed": "node src/database/seed.ts"
   }
 }
