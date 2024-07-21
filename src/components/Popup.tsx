@@ -1,28 +1,31 @@
-import type { AlertColor } from "@mui/material";
-import { Alert, AlertTitle, Snackbar } from "@mui/material";
-import { SyntheticEvent } from "react";
+"use client";
 
-export type Props = {
-  isOpen: boolean;
-  severity?: AlertColor;
-  title?: string;
-  message?: string;
-  autoHideDuration?: number | null;
-  onClose?: (event: SyntheticEvent) => void;
-};
+import { Close } from "@mui/icons-material";
+import { IconButton } from "@mui/material";
+import {
+  SnackbarProvider,
+  SnackbarProviderProps,
+  closeSnackbar,
+} from "notistack";
 
-export default function Popup(props: Props) {
+export { closeSnackbar, enqueueSnackbar, useSnackbar } from "notistack";
+
+export default function Popup(props: SnackbarProviderProps) {
   return (
-    <Snackbar open={props.isOpen} autoHideDuration={props.autoHideDuration}>
-      <Alert
-        onClose={props.onClose}
-        severity={props.severity}
-        variant="filled"
-        sx={{ width: "100%" }}
-      >
-        <AlertTitle>{props?.title}</AlertTitle>
-        {props?.message}
-      </Alert>
-    </Snackbar>
+    <SnackbarProvider
+      autoHideDuration={3000}
+      maxSnack={3}
+      action={(id) => (
+        <IconButton
+          size="small"
+          aria-label="close"
+          color="inherit"
+          onClick={() => closeSnackbar(id)}
+        >
+          <Close fontSize="small" />
+        </IconButton>
+      )}
+      {...props}
+    />
   );
 }
