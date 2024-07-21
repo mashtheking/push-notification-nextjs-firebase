@@ -1,3 +1,4 @@
+import { app } from "@/lib/firebase/app";
 import {
   getToken as fcmGetToken,
   onMessage as fcmOnMessage,
@@ -7,7 +8,8 @@ import {
   Observer,
   Unsubscribe,
 } from "firebase/messaging";
-import { app } from "./app";
+
+export { isSupported } from "firebase/messaging";
 
 export type Handler = Unsubscribe | null;
 
