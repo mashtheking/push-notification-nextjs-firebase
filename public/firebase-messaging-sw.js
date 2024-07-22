@@ -23,7 +23,6 @@ const app = f.initializeApp({
   appId: "1:886761309595:web:1505ab7641ff55e4c14d3e",
   measurementId: "G-P38MVXH8X0",
 });
-
 const messaging = f.messaging(app);
 
 if (!f.messaging.isSupported()) {
@@ -33,11 +32,6 @@ if (!f.messaging.isSupported()) {
 }
 
 messaging.onBackgroundMessage((payload) => {
-  console.info(
-    "[firebase-messaging-sw.js] Received background message.",
-    payload,
-  );
-
   sw.registration.showNotification(payload.notification?.title || "", {
     body: payload.notification?.body,
     icon: payload.notification?.icon,
