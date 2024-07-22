@@ -1,9 +1,9 @@
-import { app } from "@/lib/firebase/app";
 import {
   getToken as fcmGetToken,
   onMessage as fcmOnMessage,
   getMessaging,
   MessagePayload,
+  Messaging,
   NextFn,
   Observer,
   Unsubscribe,
@@ -11,18 +11,23 @@ import {
 
 export { isSupported } from "firebase/messaging";
 
-export type Handler = Unsubscribe | null;
+export async function messaging(): Promise<Messaging> {
+  const { app } = await import("@/lib/firebase/app");
 
-export const messaging = getMessaging(app);
+  return getMessaging(app);
+}
 
-export const onMessage = (
+export async function onMessage(
   handler: NextFn<MessagePayload> | Observer<MessagePayload>,
-) => fcmOnMessage(messaging, handler);
+): Promise<Unsubscribe> {
+  return fcmOnMessage(await messaging(), handler);
+}
 
-export const getToken = (
+export async function getToken(
   serviceWorkerRegistration?: ServiceWorkerRegistration,
-) =>
-  fcmGetToken(messaging, {
+): Promise<string> {
+  return fcmGetToken(await messaging(), {
     vapidKey: process.env.NEXT_PUBLIC_FIREBASE_FCM_VAPID_KEY,
     serviceWorkerRegistration,
   });
+}

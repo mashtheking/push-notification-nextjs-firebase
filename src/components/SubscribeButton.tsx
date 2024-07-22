@@ -1,11 +1,11 @@
 "use client";
 
-import { enqueueSnackbar } from "@/components/Popup";
 import useContextSubscriptionList from "@/hooks/useContextSubscriptionList";
-import { getToken, onMessage } from "@/lib/firebase/messaging";
+import { getToken, isSupported, onMessage } from "@/lib/firebase/messaging";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { Card, CardActions, CardHeader } from "@mui/material";
-import { MouseEventHandler, useCallback, useEffect, useState } from "react";
+import { enqueueSnackbar } from "notistack";
+import { MouseEventHandler, useEffect, useState } from "react";
 
 export default function SubscribeButton() {
   const [enableSubscribeButton, setEnableSubscribeButton] =
@@ -19,70 +19,65 @@ export default function SubscribeButton() {
   const { getSubscriptionList } = useContextSubscriptionList();
 
   useEffect(() => {
-    if (!("Notification" in window) || Notification.permission !== "granted") {
-      return;
-    }
+    (async () => {
+      if (!(await isSupported()) || Notification.permission !== "granted") {
+        return;
+      }
 
-    return onMessage((payload) => {
-      new Notification(payload.notification?.title || "", {
-        body: payload.notification?.body,
-        icon: payload.notification?.icon,
+      return onMessage((payload) => {
+        new Notification(payload.notification?.title || "", {
+          body: payload.notification?.body,
+          icon: payload.notification?.icon,
+        });
       });
-    });
+    })();
   }, [token]);
 
-  const handleSubscribe: MouseEventHandler<HTMLButtonElement> =
-    useCallback(async () => {
-      try {
-        setLoadingSubscribeButton(true);
-
-        const permission = await Notification.requestPermission();
-
-        if (permission === "denied") {
-          enqueueSnackbar(
-            "You do not allow the app to show notifications. Please check the notification setting on your browser.",
-            { variant: "error" },
-          );
-          return;
-        }
-
-        await navigator.serviceWorker.register("./firebase-messaging-sw.js");
-
-        const token = await getToken(await navigator.serviceWorker.ready);
-        setToken(token);
-        const response = await fetch("/api/subscriptions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            data: { token },
-          }),
-        });
-
-        if (response.status !== 201) {
-          throw new Error(
-            ((await response.json()) as { message: string })?.message ||
-              "Failed to subscribe.",
-          );
-        }
-
-        enqueueSnackbar("You allow the app to show notifications.", {
-          variant: "success",
-        });
-      } catch (error) {
-        // @ts-ignore:next-line
-        enqueueSnackbar(error?.message, { variant: "error" });
-        console.error(error);
-      } finally {
-        await getSubscriptionList();
-        setEnableSubscribeButton(Notification.permission === "default");
-        setLoadingSubscribeButton(false);
-        setTextSubscribeButton(
-          Notification.permission === "granted" ? "Subscribed" : "Blocked",
+  const handleSubscribe: MouseEventHandler<HTMLButtonElement> = async () => {
+    try {
+      setLoadingSubscribeButton(true);
+      const permission = await Notification.requestPermission();
+      if (permission === "denied") {
+        enqueueSnackbar(
+          "You do not allow the app to show notifications. Please check the notification setting on your browser.",
+          { variant: "error" },
+        );
+        return;
+      }
+      await navigator.serviceWorker.register("./firebase-messaging-sw.js");
+      const token = await getToken(await navigator.serviceWorker.ready);
+      setToken(token);
+      const response = await fetch("/api/subscriptions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          data: { token },
+        }),
+      });
+      if (response.status !== 201) {
+        throw new Error(
+          ((await response.json()) as { message: string })?.message ||
+            "Failed to subscribe.",
         );
       }
-    }, [getSubscriptionList]);
+      enqueueSnackbar("You allow the app to show notifications.", {
+        variant: "success",
+      });
+    } catch (error) {
+      // @ts-ignore:next-line
+      enqueueSnackbar(error?.message, { variant: "error" });
+      console.error(error);
+    } finally {
+      await getSubscriptionList();
+      setEnableSubscribeButton(Notification.permission === "default");
+      setLoadingSubscribeButton(false);
+      setTextSubscribeButton(
+        Notification.permission === "granted" ? "Subscribed" : "Blocked",
+      );
+    }
+  };
 
   return (
     <Card>
