@@ -59,13 +59,7 @@ export default function SendNotificationForm() {
             title: parsedFormData.title,
             body: parsedFormData.body,
             tags: parsedFormData.tags,
-            // image_url: "",
           },
-          // webpush: {
-          //   fcm_options: {
-          //     link: "",
-          //   },
-          // },
         }),
       });
 
