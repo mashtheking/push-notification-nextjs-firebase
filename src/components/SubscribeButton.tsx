@@ -25,10 +25,10 @@ export default function SubscribeButton() {
       }
 
       return onMessage((payload) => {
-        new Notification(payload.notification?.title || "", {
-          body: payload.notification?.body,
-          icon: payload.notification?.icon,
-        });
+        enqueueSnackbar(
+          `${payload.notification?.title}: ${payload.notification?.body}`,
+          { variant: "info" },
+        );
       });
     })();
   }, [token]);
