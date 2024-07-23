@@ -1,0 +1,1 @@
+Create a simple push notification on a web using Next.js and Firebase.
