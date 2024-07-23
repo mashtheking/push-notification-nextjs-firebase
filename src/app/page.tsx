@@ -23,11 +23,11 @@ export default function Page() {
     >
       <Grid container spacing={4} maxWidth="lg">
         <SendNotificationFormContextProvider>
-          <Grid item xs={12} md={7}>
+          <Grid item xs={12} md={7} order={{ xs: 2, md: 1 }}>
             <SendNotificationForm />
           </Grid>
 
-          <Grid item xs={12} md={5}>
+          <Grid item xs={12} md={5} order={{ xs: 1, md: 2 }}>
             <Grid container spacing={4}>
               <SubscriptionListContextProvider>
                 <Grid item xs={12}>
