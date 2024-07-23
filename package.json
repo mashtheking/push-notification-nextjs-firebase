@@ -14,14 +14,15 @@
     "dev": "next dev",
     "dev:secure": "next dev --experimental-https",
     "migrate:dev": "npx dotenv -e .env.local -- prisma migrate dev",
-    "db:push": "npx dotenv -e .env.local -- prisma db push",
+    "migrate:deploy": "npx dotenv -e .env.local -- prisma migrate deploy",
     "migrate:reset": "npx dotenv -e .env.local -- prisma migrate reset",
+    "db:push": "npx dotenv -e .env.local -- prisma db push",
     "db:seed": "npx dotenv -e .env.local -- prisma db seed",
     "prisma:generate": "npx dotenv -e .env.local -- prisma generate",
     "prisma:studio": "npx dotenv -e .env.local -- prisma studio",
-    "production:build": "npx prisma generate && npx prisma migrate deploy && next build",
+    "production:build": "npm run prisma:generate && npm run migrate:deploy && next build",
     "build": "next build",
-    "postinstall": "npm run prisma:generate",
+    "postinstall": "npm run prisma:generate && npm run migrate:deploy",
     "start": "next start",
     "lint": "next lint"
   },
@@ -51,7 +52,7 @@
     "@mui/icons-material": "^5.16.0",
     "@mui/lab": "^5.0.0-alpha.172",
     "@mui/material-nextjs": "^5.15.11",
-    "@prisma/client": "^5.16.2",
+    "@prisma/client": "^5.17.0",
     "@scalar/nextjs-api-reference": "^0.4.43",
     "chalk": "^5.3.0",
     "firebase": "^10.12.3",
@@ -59,6 +60,7 @@
     "next": "^14.2.5",
     "next-swagger-doc": "^0.4.0",
     "notistack": "^3.0.1",
+    "prisma": "^5.17.0",
     "react": "^18",
     "react-dom": "^18",
     "zod": "^3.23.8"
@@ -72,7 +74,6 @@
     "eslint-config-next": "14.2.4",
     "eslint-plugin-jsdoc": "^48.7.0",
     "postcss": "^8",
-    "prisma": "^5.16.2",
     "typescript": "^5"
   },
   "prisma": {
