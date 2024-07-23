@@ -4,7 +4,7 @@ All notable changes to `NgodingBang Push Notification with Next.js and Firebase`
 
 ## [Unreleased](https://github.com/ngodingbang/push-notification-nextjs-firebase/compare/1.0.0...develop)
 
-## [1.0.0](https://github.com/ngodingbang/push-notification-nextjs-firebase/releases/tag/1.0.0) - 2024-07-22
+## [1.0.0](https://github.com/ngodingbang/push-notification-nextjs-firebase/releases/tag/1.0.0) - 2024-07-23
 
 - Initial commit by [@ngodingbang](https://github.com/ngodingbang) in [#16bd81a](https://github.com/ngodingbang/push-notification-nextjs-firebase/commit/16bd81ad9f6a5425a700b3b00fbae97b7d2db95e).
 - chore: create .editorconfig by [@ngodingbang](https://github.com/ngodingbang) in [#c1c352b](https://github.com/ngodingbang/push-notification-nextjs-firebase/commit/c1c352b55bcdde6555f7762a45022384d73e40f1).
@@ -23,3 +23,6 @@ All notable changes to `NgodingBang Push Notification with Next.js and Firebase`
 - fix: use asynchronous loading when using firebase mesagging library to prevent 500 response status by [@ngodingbang](https://github.com/ngodingbang) in [#851f795](https://github.com/ngodingbang/push-notification-nextjs-firebase/commit/851f7954f9e2a22f794c3daed3a61d92ab677231).
 - refactor: remove unnecessary request body when submit notification form by [@ngodingbang](https://github.com/ngodingbang) in [#26ccfa5](https://github.com/ngodingbang/push-notification-nextjs-firebase/commit/26ccfa5a6b2703a843befb1ef575a1e80654368b).
 - feat: use notistack to display fcm foreground notification by [@ngodingbang](https://github.com/ngodingbang) in [#255410f](https://github.com/ngodingbang/push-notification-nextjs-firebase/commit/255410f5af9764648a4b267321ff4e5805021443).
+- chore!: change database engine from sqlite into postgresql by [@ngodingbang](https://github.com/ngodingbang) in [#38cd4b9](https://github.com/ngodingbang/push-notification-nextjs-firebase/commit/38cd4b9eb50f272e33080c1dbb7229990e918352).
+- feat: setup metadata and open graph by [@ngodingbang](https://github.com/ngodingbang) in [#d70528c](https://github.com/ngodingbang/push-notification-nextjs-firebase/commit/d70528cccfbaa6758b517234b1d08a4425fca3cc).
+- style: change layout position between send notification form, subscribe button, and subscription list on mobile view by [@ngodingbang](https://github.com/ngodingbang) in [#8ab56f3](https://github.com/ngodingbang/push-notification-nextjs-firebase/commit/8ab56f32d95a3cd74e1855f44ce526c7239bf343).
