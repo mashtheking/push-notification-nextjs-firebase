@@ -1,0 +1,138 @@
+# https://dev.to/chuddyjoachim/nextjs-ci-cd-on-vercel-with-github-actions-7g7
+name: Deploy to Vercel
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  vercel:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      deployments: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: dkershner6/vercel-set-env-action@v3.0.3
+        with:
+          token: ${{ secrets.VERCEL_TOKEN }}
+          teamId: ${{ secrets.VERCEL_TEAM_ID }} # optional, without will use personal
+          projectName: push-notification-nextjs-firebase # project name in Vercel
+          envVariableKeys: "DB_URL,\
+            DB_URL_NON_POOLING,\
+            FIREBASE_ADMIN_TYPE,\
+            FIREBASE_ADMIN_PROJECT_ID,\
+            FIREBASE_ADMIN_PRIVATE_KEY_ID,\
+            FIREBASE_ADMIN_PRIVATE_KEY,\
+            FIREBASE_ADMIN_CLIENT_EMAIL,\
+            FIREBASE_ADMIN_CLIENT_ID,\
+            FIREBASE_ADMIN_AUTH_URI,\
+            FIREBASE_ADMIN_TOKEN_URI,\
+            FIREBASE_ADMIN_AUTH_PROVIDER_X509_CERT_URL,\
+            FIREBASE_ADMIN_CLIENT_X509_CERT_URL,\
+            FIREBASE_ADMIN_UNIVERSE_DOMAIN,\
+            NEXT_PUBLIC_FIREBASE_API_KEY,\
+            NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,\
+            NEXT_PUBLIC_FIREBASE_PROJECT_ID,\
+            NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,\
+            NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,\
+            NEXT_PUBLIC_FIREBASE_APP_ID,\
+            NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,\
+            NEXT_PUBLIC_FIREBASE_FCM_VAPID_KEY"
+        env:
+          DB_URL: ${{ secrets.DB_URL }}
+          TARGET_DB_URL: preview,development,production # comma delimited, one of [production, preview, development]
+          TYPE_DB_URL: encrypted # one of [plain, encrypted]
+
+          DB_URL_NON_POOLING: ${{ secrets.DB_URL_NON_POOLING }}
+          TARGET_DB_URL_NON_POOLING: preview,development,production
+          TYPE_DB_URL_NON_POOLING: encrypted
+
+          FIREBASE_ADMIN_TYPE: ${{ secrets.FIREBASE_ADMIN_TYPE }}
+          TARGET_FIREBASE_ADMIN_TYPE: preview,development,production
+          TYPE_FIREBASE_ADMIN_TYPE: encrypted
+
+          FIREBASE_ADMIN_PROJECT_ID: ${{ secrets.FIREBASE_ADMIN_PROJECT_ID }}
+          TARGET_FIREBASE_ADMIN_PROJECT_ID: preview,development,production
+          TYPE_FIREBASE_ADMIN_PROJECT_ID: encrypted
+
+          FIREBASE_ADMIN_PRIVATE_KEY_ID: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY_ID }}
+          TARGET_FIREBASE_ADMIN_PRIVATE_KEY_ID: preview,development,production
+          TYPE_FIREBASE_ADMIN_PRIVATE_KEY_ID: encrypted
+
+          FIREBASE_ADMIN_PRIVATE_KEY: ${{ secrets.FIREBASE_ADMIN_PRIVATE_KEY }}
+          TARGET_FIREBASE_ADMIN_PRIVATE_KEY: preview,development,production
+          TYPE_FIREBASE_ADMIN_PRIVATE_KEY: encrypted
+
+          FIREBASE_ADMIN_CLIENT_EMAIL: ${{ secrets.FIREBASE_ADMIN_CLIENT_EMAIL }}
+          TARGET_FIREBASE_ADMIN_CLIENT_EMAIL: preview,development,production
+          TYPE_FIREBASE_ADMIN_CLIENT_EMAIL: encrypted
+
+          FIREBASE_ADMIN_CLIENT_ID: ${{ secrets.FIREBASE_ADMIN_CLIENT_ID }}
+          TARGET_FIREBASE_ADMIN_CLIENT_ID: preview,development,production
+          TYPE_FIREBASE_ADMIN_CLIENT_ID: encrypted
+
+          FIREBASE_ADMIN_AUTH_URI: ${{ secrets.FIREBASE_ADMIN_AUTH_URI }}
+          TARGET_FIREBASE_ADMIN_AUTH_URI: preview,development,production
+          TYPE_FIREBASE_ADMIN_AUTH_URI: encrypted
+
+          FIREBASE_ADMIN_TOKEN_URI: ${{ secrets.FIREBASE_ADMIN_TOKEN_URI }}
+          TARGET_FIREBASE_ADMIN_TOKEN_URI: preview,development,production
+          TYPE_FIREBASE_ADMIN_TOKEN_URI: encrypted
+
+          FIREBASE_ADMIN_AUTH_PROVIDER_X509_CERT_URL: ${{ secrets.FIREBASE_ADMIN_AUTH_PROVIDER_X509_CERT_URL }}
+          TARGET_FIREBASE_ADMIN_AUTH_PROVIDER_X509_CERT_URL: preview,development,production
+          TYPE_FIREBASE_ADMIN_AUTH_PROVIDER_X509_CERT_URL: encrypted
+
+          FIREBASE_ADMIN_CLIENT_X509_CERT_URL: ${{ secrets.FIREBASE_ADMIN_CLIENT_X509_CERT_URL }}
+          TARGET_FIREBASE_ADMIN_CLIENT_X509_CERT_URL: preview,development,production
+          TYPE_FIREBASE_ADMIN_CLIENT_X509_CERT_URL: encrypted
+
+          FIREBASE_ADMIN_UNIVERSE_DOMAIN: ${{ secrets.FIREBASE_ADMIN_UNIVERSE_DOMAIN }}
+          TARGET_FIREBASE_ADMIN_UNIVERSE_DOMAIN: preview,development,production
+          TYPE_FIREBASE_ADMIN_UNIVERSE_DOMAIN: encrypted
+
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY }}
+          TARGET_NEXT_PUBLIC_FIREBASE_API_KEY: preview,development,production
+          TYPE_NEXT_PUBLIC_FIREBASE_API_KEY: encrypted
+
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: ${{ secrets.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN }}
+          TARGET_NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: preview,development,production
+          TYPE_NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: encrypted
+
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_PROJECT_ID }}
+          TARGET_NEXT_PUBLIC_FIREBASE_PROJECT_ID: preview,development,production
+          TYPE_NEXT_PUBLIC_FIREBASE_PROJECT_ID: encrypted
+
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: ${{ secrets.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET }}
+          TARGET_NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: preview,development,production
+          TYPE_NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: encrypted
+
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID }}
+          TARGET_NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: preview,development,production
+          TYPE_NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: encrypted
+
+          NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
+          TARGET_NEXT_PUBLIC_FIREBASE_APP_ID: preview,development,production
+          TYPE_NEXT_PUBLIC_FIREBASE_APP_ID: encrypted
+
+          NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID }}
+          TARGET_NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: preview,development,production
+          TYPE_NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: encrypted
+
+          NEXT_PUBLIC_FIREBASE_FCM_VAPID_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_FCM_VAPID_KEY }}
+          TARGET_NEXT_PUBLIC_FIREBASE_FCM_VAPID_KEY: preview,development,production
+          TYPE_NEXT_PUBLIC_FIREBASE_FCM_VAPID_KEY: encrypted
+
+      - uses: amondnet/vercel-action@v25.2.0
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          github-token: ${{ secrets.GITHUB_TOKEN }} # Optional
+          vercel-args: "--prod" # Optional
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}} # Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} # Required
