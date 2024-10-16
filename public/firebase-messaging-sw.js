@@ -15,13 +15,13 @@ const sw = self;
 const f = firebase;
 
 const app = f.initializeApp({
-  apiKey: "AIzaSyAcNnKSuGgtm_N5Pt10nfgLguWWtZfiGNo",
-  authDomain: "push-notification-20240707.firebaseapp.com",
-  projectId: "push-notification-20240707",
-  storageBucket: "push-notification-20240707.appspot.com",
-  messagingSenderId: "886761309595",
-  appId: "1:886761309595:web:1505ab7641ff55e4c14d3e",
-  measurementId: "G-P38MVXH8X0",
+    apiKey: "AIzaSyDC1H8Eum8Jl8VXTCVw_oG1GtSKLWU4-Jc",
+  authDomain: "mziki-africa.firebaseapp.com",
+  projectId: "mziki-africa",
+  storageBucket: "mziki-africa.appspot.com",
+  messagingSenderId: "1019501721189",
+  appId: "1:1019501721189:web:450c39a16b553371f1788c",
+  measurementId: "G-84NDQVLD5N"
 });
 const messaging = f.messaging(app);
 
