@@ -21,7 +21,9 @@ const app = f.initializeApp({
   storageBucket: "mziki-africa.appspot.com",
   messagingSenderId: "1019501721189",
   appId: "1:1019501721189:web:450c39a16b553371f1788c",
-  measurementId: "G-84NDQVLD5N"
+  measurementId: "G-84NDQVLD5N",
+
+
 });
 const messaging = f.messaging(app);
 
